@@ -12,7 +12,7 @@ export const getProductQueryKey = (id: Product['id']) => {
   return ['products', id];
 };
 
-export const useProducts = ({category}: ProductsRequest) => {
+export const useProducts = ({ category }: ProductsRequest) => {
   return useQuery({
     queryKey: getProductsQueryKey(category),
     queryFn: () => fetchProducts({})

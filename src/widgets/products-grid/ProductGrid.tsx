@@ -6,7 +6,6 @@ import styles from '@/widgets/products-grid/ProductGrid.module.scss';
 import { useParams } from 'next/navigation';
 
 const ProductGrid: FC = () => {
-
   const params = useParams<{ category: string }>();
 
   const { data: productsRes, isLoading, error } = useProducts({ category: params.category });
