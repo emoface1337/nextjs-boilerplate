@@ -1,4 +1,8 @@
-export interface ProductsRes {
+export interface ProductsRequest {
+  category?: string;
+}
+
+export interface ProductsResponse {
   products: Product[];
   total: number;
   skip: number;

@@ -1,13 +1,12 @@
-import axiosInstance from '@/shared/api/axios';
-import { Product, ProductsRes } from '@/features/products/models/product';
+import axiosClient from '@/shared/api/client/axios';
+import { Product, ProductsRequest, ProductsResponse } from '@/features/products/models/product';
 
-export const fetchProducts = async (): Promise<ProductsRes> => {
-  const response = await axiosInstance.get('/products');
+export const fetchProducts = async ({}: ProductsRequest): Promise<ProductsResponse> => {
+  const response = await axiosClient.get('/products');
   return response.data;
 };
 
 export const fetchProduct = async (id: Product['id']): Promise<Product> => {
-  const response = await axiosInstance.get(`/products/${id}`);
+  const response = await axiosClient.get(`/products/${id}`);
   return response.data;
 };
-

@@ -1,4 +1,9 @@
-.footer {
+@use '@/shared/styles/globals' as *;
+
+.header {
   width: 100dvw;
   height: 40px;
+  @include flex-center();
+  justify-content: space-between;
+  padding: 0 20px;
 }

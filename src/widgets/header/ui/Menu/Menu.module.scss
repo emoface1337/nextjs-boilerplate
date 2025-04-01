@@ -1,0 +1,82 @@
+$menu-bg: transparent;
+$menu-item-color: #333;
+$menu-item-hover-color: #0070f3;
+$menu-item-padding: 0.5rem 1rem;
+$menu-border-radius: 4px;
+$transition-speed: 0.2s;
+
+.menu {
+  background: $menu-bg;
+  font-family: 'Inter', sans-serif;
+
+  &__list {
+    display: flex;
+    gap: 1rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.menuItem {
+  position: relative;
+  padding: $menu-item-padding;
+  border-radius: $menu-border-radius;
+  transition: all $transition-speed ease;
+
+  &__link {
+    color: $menu-item-color;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1rem;
+
+    &:hover {
+      color: $menu-item-hover-color;
+    }
+  }
+
+  // Модификатор для активного пункта
+  &--active {
+    background: rgba($menu-item-hover-color, 0.1);
+
+    .menuItem__link {
+      color: $menu-item-hover-color;
+      font-weight: 600;
+    }
+
+    // Подчеркивание для активного пункта
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      height: 2px;
+      background: $menu-item-hover-color;
+    }
+  }
+}
+
+// Анимация при наведении (миксин)
+@mixin hover-effect {
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+}
+
+// Мобильная адаптация (media query)
+@media (max-width: 768px) {
+  .menu {
+    &__list {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }
+
+  .menuItem {
+    padding: 0.5rem;
+    text-align: center;
+  }
+}

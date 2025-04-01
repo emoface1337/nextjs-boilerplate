@@ -4,7 +4,6 @@ import ProductInfo from '@/entities/product/ui/ProductInfo';
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 import { getProductQueryKey } from '@/features/products';
 import styles from '@/app/(main)/product-static/[productId]/page.module.scss';
-import Loading from '@/app/(main)/product-static/[productId]/loading';
 import RecommendedProducts from '@/widgets/recommended-products/RecommendedProducts';
 
 export default async function ProductPage({ params }: { params: Promise<{ productId: string }> }) {
@@ -24,7 +23,7 @@ export default async function ProductPage({ params }: { params: Promise<{ produc
         Product ID : {productId}
         <ProductInfo productId={+productId} />
       </div>
-      <Suspense fallback={<Loading />}>
+      <Suspense fallback={null}>
         <RecommendedProducts productId={+productId} />
       </Suspense>
     </HydrationBoundary>

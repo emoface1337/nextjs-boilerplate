@@ -5,12 +5,11 @@ import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query
 import { getProductQueryKey } from '@/features/products';
 import styles from '@/app/(main)/product-static/[productId]/page.module.scss';
 import RecommendedProducts from '@/widgets/recommended-products/RecommendedProducts';
-import Loading from '@/app/(main)/product-static/[productId]/loading';
 
 export const revalidate = 3600; // ревалидируем страницу каждый час, логику ревалидации читать в доке
 
 export async function generateStaticParams() {
-  const productsRes = await fetchProducts();
+  const productsRes = await fetchProducts({});
 
   return productsRes.products.map((product) => ({
     productId: `${product.id}`
@@ -35,7 +34,7 @@ export default async function ProductPage({ params }: { params: Promise<{ produc
           <ProductInfo productId={+productId} />
         </div>
       </HydrationBoundary>
-      <Suspense fallback={<Loading />}>
+      <Suspense fallback={null}>
         <RecommendedProducts productId={+productId} />
       </Suspense>
     </>

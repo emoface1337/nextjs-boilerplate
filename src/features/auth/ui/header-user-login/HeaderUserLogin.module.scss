@@ -1,0 +1,8 @@
+@use '@/shared/styles/globals' as *;
+
+.avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 100%;
+  @include flex-center();
+}
