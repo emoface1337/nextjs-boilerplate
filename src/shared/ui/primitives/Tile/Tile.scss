@@ -1,0 +1,32 @@
+@use '../../../styles/globals' as *;
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:string';
+@use 'sass:meta';
+
+.tile {
+  display: grid;
+  gap: 1rem;
+  width: 100%;
+
+  // Генерация классов для каждого брейкпоинта
+  @each $name, $breakpoint in $default-breakpoints {
+    $i: list.index(map.keys($default-breakpoints), $name) - 1;
+
+    @media (min-width: $breakpoint) {
+      // Динамическое создание классов для любого количества колонок
+      @for $cols from 1 through 12 {
+        &.tile--cols-#{$i}-#{$cols} {
+          grid-template-columns: repeat(#{$cols}, 1fr);
+        }
+      }
+
+      // Для случаев, когда нужно больше 12 колонок
+      @for $cols from 13 through 24 {
+        &.tile--cols-#{$i}-#{$cols} {
+          grid-template-columns: repeat(#{$cols}, minmax(0, 1fr));
+        }
+      }
+    }
+  }
+}

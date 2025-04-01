@@ -1,0 +1,36 @@
+@use 'sass:meta';
+@use 'sass:string';
+@use 'sass:list';
+@use 'sass:map';
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin tile($columns: 1) {
+  display: grid;
+  gap: 1rem;
+
+  // Если передано одно число - используем для всех разрешений
+  @if type-of($columns) == 'number' {
+    grid-template-columns: repeat($columns, 1fr);
+  }
+  // Если передан массив - используем для соответствующих брейкпоинтов
+  @else if type-of($columns) == 'list' {
+    // Мобильный по умолчанию (первый элемент массива)
+    grid-template-columns: repeat(nth($columns, 1), 1fr);
+
+    // Для остальных брейкпоинтов
+    $i: 2;
+    @each $name, $breakpoint in $default-breakpoints {
+      @if $i <= length($columns) {
+        @media (min-width: $breakpoint) {
+          grid-template-columns: repeat(nth($columns, $i), 1fr);
+        }
+        $i: $i + 1;
+      }
+    }
+  }
+}

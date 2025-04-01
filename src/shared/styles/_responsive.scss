@@ -1,0 +1,109 @@
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:string';
+@use 'sass:meta';
+
+$default-breakpoints: (
+  mobile: 320px,
+  tablet: 768px,
+  desktop: 1024px,
+  large: 1280px
+) !default;
+
+@mixin responsive($properties, $breakpoints: $default-breakpoints) {
+  // Сортируем брейкпоинты по размеру
+  $sorted-breakpoints: sort-breakpoints($breakpoints);
+  $breakpoint-names: map.keys($sorted-breakpoints);
+  $breakpoint-count: list.length($breakpoint-names);
+
+  // Генерируем базовые стили (первое значение)
+  & {
+    @each $property, $values in $properties {
+      $values-list: normalize-values($values, $breakpoint-count);
+      #{$property}: string.unquote(list.nth($values-list, 1));
+    }
+  }
+
+  // Генерируем медиазапросы для остальных брейкпоинтов
+  @for $i from 2 through $breakpoint-count {
+    $breakpoint-name: list.nth($breakpoint-names, $i);
+    $breakpoint-size: map.get($sorted-breakpoints, $breakpoint-name);
+
+    @media (min-width: $breakpoint-size) {
+      & {
+        @each $property, $values in $properties {
+          $values-list: normalize-values($values, $breakpoint-count);
+          #{$property}: string.unquote(list.nth($values-list, $i));
+        }
+      }
+    }
+  }
+}
+
+// Нормализуем значения - дополняем последним значением если нужно
+@function normalize-values($values, $required-count) {
+  $values-list: if(meta.type-of($values) == 'string', str-split($values, ' '), $values);
+  $values-count: list.length($values-list);
+
+  @if $values-count >= $required-count {
+    @return $values-list;
+  }
+
+  $last-value: list.nth($values-list, -1);
+  @for $i from $values-count + 1 through $required-count {
+    $values-list: list.append($values-list, $last-value);
+  }
+
+  @return $values-list;
+}
+
+// Функция для сортировки брейкпоинтов по размеру
+@function sort-breakpoints($breakpoints) {
+  $breakpoint-list: ();
+
+  @each $name, $size in $breakpoints {
+    $breakpoint-list: list.append($breakpoint-list, ($name $size));
+  }
+
+  // Сортируем пузырьком
+  @for $i from 1 through list.length($breakpoint-list) - 1 {
+    @for $j from 1 through list.length($breakpoint-list) - $i {
+      $current: list.nth($breakpoint-list, $j);
+      $next: list.nth($breakpoint-list, $j + 1);
+
+      @if list.nth($current, 2) > list.nth($next, 2) {
+        $breakpoint-list: list.set-nth($breakpoint-list, $j, $next);
+        $breakpoint-list: list.set-nth($breakpoint-list, $j + 1, $current);
+      }
+    }
+  }
+
+  $sorted: ();
+  @each $item in $breakpoint-list {
+    $sorted: map.merge(
+      $sorted,
+      (
+        list.nth($item, 1): list.nth($item, 2)
+      )
+    );
+  }
+
+  @return $sorted;
+}
+
+// Функция для разделения строки по разделителю
+@function str-split($string, $separator) {
+  $result: ();
+  $index: string.index($string, $separator);
+
+  @while $index {
+    $item: string.slice($string, 1, $index - 1);
+    $result: list.append($result, $item);
+    $string: string.slice($string, $index + 1);
+    $index: string.index($string, $separator);
+  }
+
+  $result: list.append($result, $string);
+
+  @return $result;
+}
