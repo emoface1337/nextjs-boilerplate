@@ -1,3 +1,6 @@
-@forward 'colors';
-@forward 'mixins';
-@forward 'responsive';
+@forward 'variables/colors';
+@forward 'variables/grid';
+@forward 'variables/typography';
+
+@forward 'mixins/mixins';
+@forward 'mixins/responsive';

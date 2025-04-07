@@ -1,0 +1,19 @@
+@import '../functions/functions';
+
+$grid-columns: 12 !default;
+$grid-gutter-width: 20px !default;
+
+$container-max-widths: (
+  xs: 360px,
+  md: 768px,
+  lg: 1024px,
+  xl: 1320px
+) !default;
+
+$container-paddings: (
+  xs: 0 16px,
+  xl: 0 20px
+) !default;
+
+$responsive-container-paddings: map-to-string($container-paddings);
+$responsive-container-max-width: map-to-string($container-max-widths);

@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 import { isDev } from '@/shared/utils/misc';
-import { getClientAuthCookies, removeClientAuthCookies, setClientAuthCookies } from '@/shared/utils/cookie-client-actions';
+import { getClientAuthCookies, removeClientAuthCookies, setClientAuthCookies } from '@/shared/utils/auth-cookie-actions';
 import { AuthResponse } from '@/features/auth/models/auth';
 import { AUTH_ENDPOINTS } from '@/features/auth/constants/auth';
 import { isServer } from '@tanstack/react-query';

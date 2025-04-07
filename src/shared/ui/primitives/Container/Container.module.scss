@@ -1,0 +1,13 @@
+@use '@/shared/styles/globals' as *;
+
+.root {
+  width: 100%;
+  margin: 0 auto;
+  @include responsive(
+    (
+      max-width: $responsive-container-max-width,
+      padding-left: $responsive-container-paddings,
+      padding-right: $responsive-container-paddings
+    )
+  );
+}

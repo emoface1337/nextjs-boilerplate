@@ -1,9 +1,5 @@
-import styles from '@/app/page.scss';
+import HeroSection from '@/features/hero-section/HeroSection';
 
 export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>main page</main>
-    </div>
-  );
+  return <HeroSection />;
 }

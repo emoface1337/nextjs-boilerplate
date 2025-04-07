@@ -3,12 +3,7 @@
 @use 'sass:string';
 @use 'sass:meta';
 
-$default-breakpoints: (
-  mobile: 320px,
-  tablet: 768px,
-  desktop: 1024px,
-  large: 1280px
-) !default;
+@import '../variables/breakpoints';
 
 @mixin responsive($properties, $breakpoints: $default-breakpoints) {
   // Сортируем брейкпоинты по размеру

@@ -1,0 +1,7 @@
+@function map-to-string($map) {
+  $result: '';
+  @each $key, $value in $map {
+    $result: if($result == '', '#{$value}', '#{$result} #{$value}');
+  }
+  @return $result;
+}

@@ -1,9 +1,19 @@
 import styles from './Menu.module.scss';
 import { getMenu } from '@/widgets/header/model/getMenu';
 import Link from 'next/link';
+import { unstable_cache } from 'next/cache';
+
+const getMenuItems = unstable_cache(
+  async () => {
+    const menuItems = await getMenu();
+    return menuItems ?? [];
+  },
+  ['menu'],
+  { revalidate: 3600 }
+);
 
 export async function Menu() {
-  const menuItems = await getMenu(); // Запрос на сервере
+  const menuItems = await getMenuItems(); // Запрос на сервере
 
   return (
     <nav className={styles.menu}>
